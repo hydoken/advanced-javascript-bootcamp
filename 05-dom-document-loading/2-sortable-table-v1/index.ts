@@ -23,15 +23,19 @@ interface SortState {
 export default class SortableTable {
   element: HTMLElement | null;
   subElements: Record<string, HTMLElement> = {};
+  headersConfig: SortableTableHeader[] = [];
+  data: SortableTableData[] = [];
   private field: string = "";
   private order: SortOrder = "asc";
 
   constructor(
-    private headersConfig: SortableTableHeader[] = [],
-    private data: SortableTableData[] = [],
+    headersConfig: SortableTableHeader[] = [],
+    data: SortableTableData[] = [],
   ) {
     this.element = createElement(this.template);
     this.subElements = this.getSubElements();
+    this.headersConfig = headersConfig;
+    this.data = data;
   }
 
   sort(field: string, order: SortOrder): void {
@@ -69,7 +73,7 @@ export default class SortableTable {
     });
   }
 
-  private hasSortChanged = (field: string, order: SortOrder): boolean => {
+  protected hasSortChanged = (field: string, order: SortOrder): boolean => {
     return this.field !== field || this.order !== order;
   };
 
@@ -91,9 +95,16 @@ export default class SortableTable {
       const orderAttribute =
         this.field === id ? `data-order="${this.order}"` : "";
 
+      const sortArrow = orderAttribute
+        ? `<span class="sortable-table__sort-arrow">
+            <span class="sort-arrow"></span>
+          </span>`
+        : "";
+
       return `
         <div class="sortable-table__cell" data-id="${id}" data-sortable="${sortable}" ${orderAttribute}>
           <span>${title}</span>
+          ${sortArrow}
         </div>
       `;
     });
