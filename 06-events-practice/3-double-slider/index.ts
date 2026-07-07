@@ -314,5 +314,7 @@ export default class DoubleSlider {
   destroy(): void {
     this.unbindEvents();
     this.remove();
+export default class DoubleSlider {
+  constructor({ }: Options = {}) {
   }
 }

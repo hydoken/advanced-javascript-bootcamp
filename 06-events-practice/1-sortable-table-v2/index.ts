@@ -3,6 +3,7 @@ import SortableTableV1 from "../../05-dom-document-loading/2-sortable-table-v1";
 const collator = new Intl.Collator(["ru", "en"], { caseFirst: "upper" });
 
 type SortOrder = "asc" | "desc";
+type SortOrder = 'asc' | 'desc';
 
 type SortableTableData = Record<string, string | number>;
 
@@ -18,6 +19,7 @@ interface SortableTableHeader {
   title: string;
   sortable?: boolean;
   sortType?: "string" | "number" | "custom";
+  sortType?: 'string' | 'number' | 'custom';
   template?: (value: string | number) => string;
   customSorting?: (a: SortableTableData, b: SortableTableData) => number;
 }
@@ -126,5 +128,11 @@ export default class SortableTable extends SortableTableV1 {
   destroy() {
     this.unbindEvents();
     super.destroy();
+export default class SortableTable {
+  constructor(headersConfig: SortableTableHeader[] = [], {
+    data = [],
+    sorted,
+    isSortLocally = true
+  }: Options = {}) {
   }
 }
