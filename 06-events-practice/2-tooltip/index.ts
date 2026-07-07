@@ -78,6 +78,4 @@ export default class Tooltip {
       <div class="tooltip">${html}</div>
     `;
   }
-export default class Tooltip {
-
 }
