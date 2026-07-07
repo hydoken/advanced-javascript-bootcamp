@@ -42,10 +42,12 @@ export default class DoubleSlider {
   element: HTMLElement;
   subElements: SubElements;
 
-  private min: number;
-  private max: number;
-  private from: number;
-  private to: number;
+  readonly min: number;
+  readonly max: number;
+
+  from: number;
+  to: number;
+
   private formatValue: (value: number) => string;
 
   private activeThumb: ThumbElement | null = null;
@@ -68,12 +70,16 @@ export default class DoubleSlider {
   }
 
   private normalizeOptions(options: Options): Required<Options> {
+    const min = options.min ?? defaultOptions.min;
+    const max = options.max ?? defaultOptions.max;
+
     return {
-      ...defaultOptions,
-      ...options,
+      min,
+      max,
+      formatValue: options.formatValue ?? defaultOptions.formatValue,
       selected: {
-        from: options.selected?.from ?? options.min ?? defaultOptions.min,
-        to: options.selected?.to ?? options.max ?? defaultOptions.max,
+        from: options.selected?.from ?? min,
+        to: options.selected?.to ?? max,
       },
     };
   }
